@@ -2,56 +2,84 @@ package main
 
 import "fmt"
 
-// 用于测试值传递效果的结构体
+//声明结构体，用于测试多种数据类型的传参机制
 type Data struct {
-	complax []int // 测试切片在参数传递中的效果
-
-	instance InnerData // 实例分配的innerData
-
-	ptr *InnerData // 将ptr声明为InnerData的指针类型
+	num int //测试普通类型
+	p *int //测试指针类型
+	arr []int //测试切片
+	m map[string]string //测试map
+	struc strucType //测试结构体
 }
 
-// 代表各种结构体字段
-type InnerData struct {
-	a int
+//传入数据中的结构体类型
+type strucType struct {
+	name string
+	age int
 }
 
-// 值传递测试函数
-func passByValue(inFunc Data) Data {
+//指针结构体，用于记录传入函数的数据结构体的各成员的地址是否变化
+type ptrStrucType struct {
+	ptrInteger *int
+	ptrPointer **int
+	ptrArr *[]int
+	ptrMap *map[string]string
+	ptrStruc *strucType	
+}
 
-	// 输出参数的成员情况
-	fmt.Printf("inFunc value: %+v\n", inFunc)
+//测试函数
+func passByValue(in Data) Data {
 
-	// 打印inFunc的指针
-	fmt.Printf("inFunc ptr: %p\n", &inFunc)
+	//输出函数内各成员的值
+	fmt.Printf("in Func data's value: %+v\n", in)
+	//输出函数内各成员的地址，这个ptrgroup是形参，所以用声明定义
+	ptrgroup := ptrStrucType{&in.num, &in.p, &in.arr, &in.m, &in.struc}
+	fmt.Printf("in Func data's ptrgroup: %+v\n", ptrgroup)
+	//函数内数据的起始地址
+	fmt.Printf("in Func data's ptr: %p\n", &in)
 
-	return inFunc
+	return in
 }
 
 func main() {
 
-	// 准备传入函数的结构
+	//定义传入函数的数据
 	in := Data{
-		complax: []int{1, 2, 3},
-		instance: InnerData{
-			5,
+		
+		num: 1,
+
+		p: new(int),
+
+		arr: []int {1, 2, 3},
+
+		m: map[string]string {
+			"w": "up",
+			"s": "down",
 		},
 
-		ptr: &InnerData{1},
+		struc: strucType{
+			"cursorhu",
+			26,
+		},
+
 	}
 
-	// 输入结构的成员情况
-	fmt.Printf("in value: %+v\n", in)
+	ptrgroup := ptrStrucType{&in.num, &in.p, &in.arr, &in.m, &in.struc}
 
-	// 输入结构的指针地址
-	fmt.Printf("in ptr: %p\n", &in)
+	//输入数据各成员的值, %+v用于打印结构体变量
+	fmt.Printf("input data value: %+v\n", in)
+	//输入数据各成员的地址
+	fmt.Printf("input data's ptrgroup: %+v\n", ptrgroup)
+	//输入结构的指针地址
+	fmt.Printf("input data's ptr: %p\n", &in)
 
-	// 传入结构体，返回同类型的结构体
+	//结构体传入函数，返回同类型的结构体
 	out := passByValue(in)
 
-	// 输出结构的成员情况
-	fmt.Printf("out value: %+v\n", out)
-
-	// 输出结构的指针地址
-	fmt.Printf("out ptr: %p\n", &out)
+	//输出数据各成员的值
+	fmt.Printf("output data value: %+v\n", out)
+	//输出数据各成员的地址
+	ptrgroup = ptrStrucType{&out.num, &out.p, &out.arr, &out.m, &out.struc}
+	fmt.Printf("output data's ptrgroup: %+v\n", ptrgroup)
+	//输出数据的起始地址
+	fmt.Printf("output data's ptr: %p\n", &out)
 }

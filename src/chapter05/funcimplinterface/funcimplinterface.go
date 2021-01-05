@@ -4,17 +4,17 @@ import (
 	"fmt"
 )
 
-// 调用器接口
+// 声明接口
 type Invoker interface {
-	// 需要实现一个Call方法
+	// 声明Call方法，需要其他地方实现
 	Call(interface{})
 }
 
-// 结构体类型
+// 定义结构体类型
 type Struct struct {
 }
 
-// 实现Invoker的Call
+// 用结构体，实现Call方法
 func (s *Struct) Call(p interface{}) {
 	fmt.Println("from struct", p)
 }
@@ -22,9 +22,8 @@ func (s *Struct) Call(p interface{}) {
 // 函数定义为类型
 type FuncCaller func(interface{})
 
-// 实现Invoker的Call
+// 用函数，实现Call方法
 func (f FuncCaller) Call(p interface{}) {
-
 	// 调用f函数本体
 	f(p)
 }
@@ -37,13 +36,13 @@ func main() {
 	// 实例化结构体
 	s := new(Struct)
 
-	// 将实例化的结构体赋值到接口
+	// 将实例化的结构体赋值到接口，实现接口和方法的关联
 	invoker = s
 
 	// 使用接口调用实例化结构体的方法Struct.Call
 	invoker.Call("hello")
 
-	// 将匿名函数转为FuncCaller类型，再赋值给接口
+	// 将匿名函数转为FuncCaller类型，再赋值给接口，实现接口和方法的关联
 	invoker = FuncCaller(func(v interface{}) {
 		fmt.Println("from function", v)
 	})

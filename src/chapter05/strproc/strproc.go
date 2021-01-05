@@ -10,17 +10,14 @@ func StringProccess(list []string, chain []func(string) string) {
 
 	// 遍历每一个字符串
 	for index, str := range list {
-
 		// 第一个需要处理的字符串
 		result := str
-
 		// 遍历每一个处理链
 		for _, proc := range chain {
 
 			// 输入一个字符串进行处理，返回数据作为下一个处理链的输入。
 			result = proc(result)
 		}
-
 		// 将结果放回切片
 		list[index] = result
 	}
@@ -28,7 +25,6 @@ func StringProccess(list []string, chain []func(string) string) {
 
 // 自定义的移除前缀的处理函数
 func removePrefix(str string) string {
-
 	return strings.TrimPrefix(str, "go")
 }
 
@@ -43,17 +39,25 @@ func main() {
 		"go formater",
 	}
 
-	// 处理函数链
+	fmt.Println("input:")
+	for _, str := range list {
+		fmt.Println(str)
+	}
+
+	//声明函数链
+	//即函数变量的切片数组，定义要实现的方法，具体实现可以自己实现，或用外部包的方法
+	//只要满足函数格式是func(string) string的方法，都可以作为函数变量的实现
 	chain := []func(string) string{
-		removePrefix,
-		strings.TrimSpace,
-		strings.ToUpper,
+		removePrefix, //去掉前缀
+		strings.TrimSpace, //删除空格
+		strings.ToUpper, //转换成大写
 	}
 
 	// 处理字符串
 	StringProccess(list, chain)
 
 	// 输出处理好的字符串
+	fmt.Println("output:")
 	for _, str := range list {
 		fmt.Println(str)
 	}

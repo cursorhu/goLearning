@@ -4,39 +4,34 @@ import (
 	"fmt"
 )
 
-// æä¾›ä¸€ä¸ªå€¼ï¼Œæ¯æ¬¡è°ƒç”¨å‡½æ•°ä¼šæŒ‡å®šå¯¹å€¼è¿›è¡Œç´¯åŠ 
+//ÀÛ¼ÓÆ÷
 func Accumulate(value int) func() int {
 
-	// è¿”å›ä¸€ä¸ªé—­åŒ…
+	//·µ»ØÒ»¸öÄäÃûº¯Êı£¬ÆäÖĞvalueÊÇÍâ²¿»·¾³£ºAccumulateº¯ÊıµÄ±äÁ¿£¬Òò´Ë·µ»ØµÄÊÇ±Õ°ü
 	return func() int {
-
-		// ç´¯åŠ 
 		value++
-
-		// è¿”å›ä¸€ä¸ªç´¯åŠ å€¼
 		return value
 	}
 }
 
 func main() {
 
-	// åˆ›å»ºä¸€ä¸ªç´¯åŠ å™¨ï¼Œåˆå§‹å€¼ä¸º1
-	accumulator := Accumulate(1)
+	//´´½¨Ò»¸öÀÛ¼ÓÆ÷£¬·µ»ØµÄÊÇ±Õ°ü
+	//±Õ°üÊÇÔÚmain´´½¨µÄ£¬ÆäÄäÃûº¯ÊıºÍ±äÁ¿(value)µÄÉúÃüÖÜÆÚºÍmainÏàÍ¬
+	accumulator := Accumulate(0)
 
-	// ç´¯åŠ 1å¹¶æ‰“å°
+	//¶Ô±Õ°üÖĞ±äÁ¿ÀÛ¼Ó
+	fmt.Println(accumulator())
 	fmt.Println(accumulator())
 
-	fmt.Println(accumulator())
-
-	// æ‰“å°ç´¯åŠ å™¨çš„å‡½æ•°åœ°å€
+	//´òÓ¡ÀÛ¼ÓÆ÷µÄµØÖ·
 	fmt.Printf("%p\n", accumulator)
 
-	// åˆ›å»ºä¸€ä¸ªç´¯åŠ å™¨ï¼Œåˆå§‹å€¼ä¸º10
-	accumulator2 := Accumulate(10)
-
-	// ç´¯åŠ 1å¹¶æ‰“å°
+	//ÓÖ´´½¨Ò»¸öÀÛ¼ÓÆ÷±Õ°ü
+	accumulator2 := Accumulate(1)
 	fmt.Println(accumulator2())
-
-	// æ‰“å°ç´¯åŠ å™¨çš„å‡½æ•°åœ°å€
 	fmt.Printf("%p\n", accumulator2)
+
+	//Ö±½Ó´´½¨ºÍÊ¹ÓÃ±Õ°ü
+	fmt.Printf("%p\n", Accumulate(2))
 }

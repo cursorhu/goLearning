@@ -10,7 +10,8 @@ OuterLoop:
 			switch j {
 			case 2:
 				fmt.Println(i, j)
-				break OuterLoop
+				//可以指定跳出哪层循环
+				break OuterLoop 
 			case 3:
 				fmt.Println(i, j)
 				break OuterLoop

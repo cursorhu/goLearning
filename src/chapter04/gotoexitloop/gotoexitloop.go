@@ -5,21 +5,16 @@ import "fmt"
 func main() {
 
 	for x := 0; x < 10; x++ {
-
 		for y := 0; y < 10; y++ {
-
 			if y == 2 {
 				// 跳转到标签
-				goto breakHere
+				goto Exit
 			}
-
 		}
 	}
-
-	// 手动返回，避免执行进入标签
+	//不会执行到这里
 	return
 
-	// 标签
-breakHere:
+Exit:
 	fmt.Println("done")
 }
