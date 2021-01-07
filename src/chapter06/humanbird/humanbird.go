@@ -13,7 +13,7 @@ func (f *Flying) Fly() {
 type Walkable struct{}
 
 func (f *Walkable) Walk() {
-	fmt.Println("can calk")
+	fmt.Println("can walk")
 }
 
 // 人类

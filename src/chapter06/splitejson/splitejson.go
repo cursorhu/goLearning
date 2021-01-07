@@ -16,7 +16,7 @@ type Battery struct {
 	Capacity int // 容量
 }
 
-// 生成json数据
+//生成json数据
 func genJsonData() []byte {
 	// 完整数据结构
 	raw := &struct {
@@ -48,32 +48,32 @@ func genJsonData() []byte {
 
 func main() {
 
-	// 生成一段json数据
+	//生成json数据，类型是[]byte
 	jsonData := genJsonData()
-
+	//打印前先转成字符串
 	fmt.Println(string(jsonData))
 
-	// 只需要屏幕和指纹识别信息的结构和实例
+	//只需要屏幕和指纹识别信息的结构和实例
 	screenAndTouch := struct {
 		Screen
 		HasTouchID bool
 	}{}
 
-	// 反序列化到screenAndTouch
+	//反序列化到screenAndTouch对象
 	json.Unmarshal(jsonData, &screenAndTouch)
 
-	// 输出screenAndTouch的详细结构
+	//输出screenAndTouch的详细结构
 	fmt.Printf("%+v\n", screenAndTouch)
 
-	// 只需要电池和指纹识别信息的结构和实例
+	//只需要电池和指纹识别信息的结构和实例
 	batteryAndTouch := struct {
 		Battery
 		HasTouchID bool
 	}{}
 
-	// 反序列化到batteryAndTouch
+	//反序列化到batteryAndTouch对象
 	json.Unmarshal(jsonData, &batteryAndTouch)
 
-	// 输出screenAndTouch的详细结构
+	//输出screenAndTouch的详细结构
 	fmt.Printf("%+v\n", batteryAndTouch)
 }
