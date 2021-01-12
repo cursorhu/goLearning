@@ -21,7 +21,7 @@ func printer(c chan int) {
 		fmt.Println(data)
 	}
 
-	// 通知main已经结束循环（我搞定了！）
+	// 通知main已经结束循环
 	c <- 0
 
 }
@@ -35,15 +35,14 @@ func main() {
 	go printer(c)
 
 	for i := 1; i <= 10; i++ {
-
 		// 将数据通过channel投送给printer
 		c <- i
 	}
 
-	// 通知并发的printer结束循环（没数据啦！）
+	// 通知并发的printer结束循环
 	c <- 0
 
-	// 等待printer结束（搞定喊我！）
+	// 等待printer结束
 	<-c
 
 }

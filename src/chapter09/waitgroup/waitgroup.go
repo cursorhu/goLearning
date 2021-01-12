@@ -3,45 +3,55 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"io/ioutil"
 	"sync"
 )
 
 func main() {
 
-	// 声明一个等待组
+	//声明一个等待组变量
 	var wg sync.WaitGroup
 
-	// 准备一系列的网站地址
+	//准备一系列的网站地址
 	var urls = []string{
+		"https://www.google.com/",
+		"https://www.kernel.org/",
 		"http://www.github.com/",
-		"https://www.qiniu.com/",
-		"https://www.golangtc.com/",
 	}
 
-	// 遍历这些地址
+	//遍历这些地址
 	for _, url := range urls {
 
-		// 每一个任务开始时，将等待组增加1
+		//每创建一个任务，将等待组增加1
 		wg.Add(1)
 
-		// 开启一个并发
+		//创建一个并发任务，处理http访问和接收
 		go func(url string) {
 
-			// 使用defer，表示函数完成时将等待组值减1
+			//使用defer，任务完成时将等待组值减1
 			defer wg.Done()
+			
+			//使用http.Get访问指定的地址，返回数据是resp
+			resp, err := http.Get(url)
+			if err != nil {
+		        fmt.Println("http.Get err=", err)
+		        return
+		    }
+		    //resp结构体数据解析成字节数据
+		    data, err := ioutil.ReadAll(resp.Body)
+		    if err != nil {
+		        fmt.Println("ioutil.ReadAll err=", err)
+		        return
+		    }
 
-			// 使用http访问提供的地址
-			_, err := http.Get(url)
+			//显示url和返回的数据
+			fmt.Println(url, string(data))
 
-			// 访问完成后，打印地址和可能发生的错误
-			fmt.Println(url, err)
-
-			// 通过参数传递url地址
 		}(url)
 	}
 
-	// 等待所有的任务完成
+	//主任务等待所有创建的任务完成
 	wg.Wait()
 
-	fmt.Println("over")
+	fmt.Println("done")
 }

@@ -7,4 +7,5 @@
 [GO语言入门（四）流程和函数](http://47.100.221.149:9010/blog/post/admin/5e496da1ecd5)  
 [GO语言入门（五）结构体和方法](http://47.100.221.149:9010/blog/post/admin/f9776e40b588)  
 [GO语言入门（六）接口](http://47.100.221.149:9010/blog/post/admin/f6a0608d9f8f)  
+[GO语言入门（七）并发和Go协程](http://47.100.221.149:9010/blog/post/admin/5a4f07dc7ebc)  
 持续更新ing...  

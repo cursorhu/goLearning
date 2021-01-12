@@ -16,7 +16,7 @@ func RPCClient(ch chan string, req string) (string, error) {
 	select {
 	case ack := <-ch: // 接收到服务器返回数据
 		return ack, nil
-	case <-time.After(time.Second): // 超时
+	case <-time.After(time.Second): // 1s超时
 		return "", errors.New("Time out")
 	}
 }
@@ -29,6 +29,9 @@ func RPCServer(ch chan string) {
 
 		// 打印接收到的数据
 		fmt.Println("server received:", data)
+
+		// 测试超时机制, Server休眠2s
+		//time.Sleep(2*time.Second)
 
 		// 反馈给客户端收到
 		ch <- "roger"
